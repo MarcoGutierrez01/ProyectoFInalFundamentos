@@ -1,4 +1,4 @@
-/*@author Marco Gutierrez
+/*@author Marco Gutierrez (mi pareja retiro la materia)
 <00363621@uca.edu.sv>
 @date 11/03/2021*/
 
@@ -6,12 +6,14 @@
 #include <stdlib.h>
 #include <time.h>
 
+//declaracion de variables
 int matriz[9][9];
 int i, j, k, l, c = 0,rr = 9;
 int score = 0;
 int fourPlus = 0;
 int row1 = 1,row2 = 2,row3 = 3,row4 = 4,row5 = 5,row6 = 6,row7 = 7,row8 = 8,row9 = 9;
 
+//declaracion de funciones
 void randomNum();
 void printArray();
 void getPair();
@@ -21,7 +23,7 @@ int addRow();
 
 int main(int argc, char const *argv[]){
   printf("\n");
-  printf("Match 10 \n\n");
+  printf("Match 10 \n\n"); // nombre del juego
 
   randomNum();
 
@@ -41,6 +43,7 @@ int main(int argc, char const *argv[]){
     }  return 0;
 }
 
+//recoleccion de datos para identificar que numero en la matriz se esta seleccionando
 void getPair(){
     printf("\n Ingrese la fila seguido de la columna en la que se encuentra el primer numero que desea emparejar: \n");
     scanf("%d%d", &i, &j);
@@ -48,6 +51,7 @@ void getPair(){
     scanf("%d%d", &k, &l);
 }
 
+//generar numeros random en la matriz
 void randomNum(){
     int i, j;
     srand(time(NULL));
@@ -59,6 +63,7 @@ void randomNum(){
     }
 }
 
+//imprimir matriz
 void printArray(){
     int i, j;
     for (i = 0; i < rr; i++){
@@ -73,13 +78,16 @@ void printArray(){
     }
 }
 
+//logica para agregar fila cuando no hay mas pares en el juego
 int addRow(){
     int rott=0;
     for(int ro1=0;ro1<rr;ro1++){
         for(int co1=0;co1<9;co1++){
             if(ro1<rr-1){
                 if(matriz[ro1][co1]!=0){
-                    if(matriz[ro1][co1] == matriz[ro1][co1+1] || matriz[ro1][co1] == matriz[ro1+1][co1] || matriz[ro1][co1]== matriz[ro1+1][co1+1] || matriz[ro1][co1]+matriz[ro1][co1+1]==10 || matriz[ro1][co1]+matriz[ro1+1][co1]==10|| matriz[ro1][co1]+matriz[ro1+1][co1+1]==10){
+                    if(matriz[ro1][co1] == matriz[ro1][co1+1] || matriz[ro1][co1] == matriz[ro1+1][co1]);
+                    if (matriz[ro1][co1]== matriz[ro1+1][co1+1] || matriz[ro1][co1]+matriz[ro1][co1+1]==10);
+                    if (matriz[ro1][co1]+matriz[ro1+1][co1]==10|| matriz[ro1][co1]+matriz[ro1+1][co1+1]==10){
                       rott++;
                     }
             }
@@ -97,6 +105,7 @@ int addRow(){
     return rott;
 }
 
+// logica para sumar los numeros que se seleccionaron e identificar si el emparejamiento se puede o no
 int emparejar(int i, int j, int k, int l, int c){
     int co;
     if (i + j == k + l - 1 || k + l == i + j - 1 || i + j == k + l || i - j == k - l || j == 9 && l == 1 ){
@@ -126,6 +135,8 @@ int emparejar(int i, int j, int k, int l, int c){
     return c;
 }
 
+//logica para identificar y sumar los puntos que gana el jugador por cada emparejamiento 
+//que hace y guardarlos para despues imprimir
 void scoreBoard(){
     int counter = 0, counter1=0, counter2=0;
     if(fourPlus > 0){
@@ -133,10 +144,10 @@ void scoreBoard(){
                 score+=4;
         }
     }
-    if(addRow()==0){
+    if(addRow()==0){  //cuando el jugador limpia de numeros el juego, gana 150 puntos y se termina el juego y ya no se agregan mas filas
         score+=150;
-    }
-    if (j == 9 && l == 1){
+    }                 
+    if (j == 9 && l == 1){    //sino, va ganando puntos hasta que ya no se pueden hacer mas parejas
         if (matriz[i - 1][j - 1] == matriz[k - 1][l - 1] || matriz[i - 1][j - 1] + matriz[k - 1][l - 1] == 10) {
                 score+=2;
         }
@@ -235,6 +246,8 @@ for(int col=0;col<9;col++){
             score+=10;
             row9=90;
         }
+    
+    //imprimir tablero y los puntos del jugador
     printf("\n              Scoreboard");
     printf("\nPlayer Points             ");
     printf("%d",score);
